@@ -28,11 +28,7 @@ public interface ActionToReplicate {
         return provideContent(initialContent, null);
     }
 
-    ;
-
     String provideContent(String initialContent, ResourceToUpdate resourceToUpdate) throws IssueProvidingContentException;
-
-    String getType();
 
     /**
      * ActionToreplicate are being built dynamically, so we need to call init after instantiating them, so that all their internals are set properly
