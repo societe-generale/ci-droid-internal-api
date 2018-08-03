@@ -12,6 +12,12 @@
 
 ### Fixed
 
+## [1.0.2] - 2018-08-02
+
+### Fixed
+- re-adding javax.el dependency in main code, as it's required by application using internal-api - this way they don't need to import it themselves. 
+- setting javax.el to 3.0.0 to avoid confusion 
+
 ## [1.0.1] - 2018-07-11
 
 ### Added
