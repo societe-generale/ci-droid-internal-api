@@ -19,10 +19,14 @@ public class GitHubInteractionTest {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    @Test
-    public void cantSerializePullRequestInteraction() throws IOException {
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    Validator validator = factory.getValidator();
 
-        PullRequestGitHubInteraction prInteraction = new PullRequestGitHubInteraction("someBranchName");
+
+    @Test
+    public void canSerializePullRequestInteraction_withNullPRname() throws IOException {
+
+        PullRequestGitHubInteraction prInteraction = new PullRequestGitHubInteraction("someBranchName",null);
 
         String serializedInteraction = objectMapper.writeValueAsString(prInteraction);
 
@@ -31,7 +35,19 @@ public class GitHubInteractionTest {
     }
 
     @Test
-    public void cantSerializeDirectPushInteraction() throws IOException {
+    public void canSerializePullRequestInteraction_withProvidedPrName() throws IOException {
+
+        PullRequestGitHubInteraction prInteraction = new PullRequestGitHubInteraction("someBranchName","the PR name");
+
+        String serializedInteraction = objectMapper.writeValueAsString(prInteraction);
+
+        assertThat(serializedInteraction).isEqualTo("{\"@c\":\".PullRequestGitHubInteraction\",\"branchNameToCreate\":\"someBranchName\",\"pullRequestName\":\"the PR name\"}");
+
+    }
+
+
+    @Test
+    public void canSerializeDirectPushInteraction() throws IOException {
 
         DirectPushGitHubInteraction directPushInteraction = new DirectPushGitHubInteraction();
 
@@ -51,13 +67,52 @@ public class GitHubInteractionTest {
 
         assertThat(gitHubInteraction.interaction).isInstanceOf(PullRequestGitHubInteraction.class);
 
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
 
         Set<ConstraintViolation<AbstractGitHubInteraction>> violations = validator.validate(gitHubInteraction.interaction);
         assertThat(violations).hasSize(1);
-
     }
+
+    @Test
+    public void canDeserializePullRequestWithNoPrName() throws IOException {
+
+        String gitHubInteractionAsString = "{\"interaction\":{\n" +
+                "    \"@c\":\".PullRequestGitHubInteraction\",\n" +
+                "    \"branchNameToCreate\":\"someName\"\n" +
+                "  }}";
+
+        TestGithubInteraction gitHubInteraction = objectMapper.readValue(gitHubInteractionAsString, TestGithubInteraction.class);
+
+        assertThat(gitHubInteraction.interaction).isInstanceOf(PullRequestGitHubInteraction.class);
+
+        Set<ConstraintViolation<AbstractGitHubInteraction>> violations = validator.validate(gitHubInteraction.interaction);
+        assertThat(violations).isEmpty();
+
+        PullRequestGitHubInteraction prAction=(PullRequestGitHubInteraction)gitHubInteraction.interaction;
+        assertThat(prAction.getBranchNameToCreate()).isEqualTo("someName");
+    }
+
+    @Test
+    public void canDeserializePullRequestWithPrName() throws IOException {
+
+        String gitHubInteractionAsString = "{\"interaction\":{\n" +
+                "    \"@c\":\".PullRequestGitHubInteraction\",\n" +
+                "    \"branchNameToCreate\":\"someName\",\n" +
+                "    \"pullRequestName\":\"the PR name\"\n" +
+                "  }}";
+
+        TestGithubInteraction gitHubInteraction = objectMapper.readValue(gitHubInteractionAsString, TestGithubInteraction.class);
+
+        assertThat(gitHubInteraction.interaction).isInstanceOf(PullRequestGitHubInteraction.class);
+
+        Set<ConstraintViolation<AbstractGitHubInteraction>> violations = validator.validate(gitHubInteraction.interaction);
+        assertThat(violations).isEmpty();
+
+        PullRequestGitHubInteraction prAction=(PullRequestGitHubInteraction)gitHubInteraction.interaction;
+        assertThat(prAction.getBranchNameToCreate()).isEqualTo("someName");
+        assertThat(prAction.getPullRequestName()).isEqualTo("the PR name");
+    }
+
+
 
     @Data
     @AllArgsConstructor

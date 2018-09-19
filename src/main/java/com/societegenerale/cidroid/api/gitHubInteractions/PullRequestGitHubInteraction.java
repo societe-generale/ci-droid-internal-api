@@ -1,5 +1,6 @@
 package com.societegenerale.cidroid.api.gitHubInteractions;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -13,6 +14,11 @@ public class PullRequestGitHubInteraction extends AbstractGitHubInteraction {
     @Setter
     @NotEmpty
     private String branchNameToCreate;
+
+    @Getter
+    @Setter
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String pullRequestName=null;
 
     @Override
     String getType() {
