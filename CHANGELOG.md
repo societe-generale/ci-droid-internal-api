@@ -12,6 +12,12 @@
 
 ### Fixed
 
+
+## [1.0.3] - 2018-09-19
+
+### Added
+- added a pullRequestName field on PullRequestGitHubInteraction
+
 ## [1.0.2] - 2018-08-02
 
 ### Fixed
