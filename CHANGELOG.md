@@ -12,6 +12,10 @@
 
 ### Fixed
 
+## [1.0.4] - 2018-09-20
+
+### Fixed
+- pullRequestName field should actually be named pullRequestTitle
 
 ## [1.0.3] - 2018-09-19
 

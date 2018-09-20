@@ -18,7 +18,7 @@ public class PullRequestGitHubInteraction extends AbstractGitHubInteraction {
     @Getter
     @Setter
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String pullRequestName=null;
+    private String pullRequestTitle=null;
 
     @Override
     String getType() {

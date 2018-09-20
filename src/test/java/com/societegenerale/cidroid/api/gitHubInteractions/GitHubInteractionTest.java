@@ -41,7 +41,7 @@ public class GitHubInteractionTest {
 
         String serializedInteraction = objectMapper.writeValueAsString(prInteraction);
 
-        assertThat(serializedInteraction).isEqualTo("{\"@c\":\".PullRequestGitHubInteraction\",\"branchNameToCreate\":\"someBranchName\",\"pullRequestName\":\"the PR name\"}");
+        assertThat(serializedInteraction).isEqualTo("{\"@c\":\".PullRequestGitHubInteraction\",\"branchNameToCreate\":\"someBranchName\",\"pullRequestTitle\":\"the PR name\"}");
 
     }
 
@@ -97,7 +97,7 @@ public class GitHubInteractionTest {
         String gitHubInteractionAsString = "{\"interaction\":{\n" +
                 "    \"@c\":\".PullRequestGitHubInteraction\",\n" +
                 "    \"branchNameToCreate\":\"someName\",\n" +
-                "    \"pullRequestName\":\"the PR name\"\n" +
+                "    \"pullRequestTitle\":\"the PR title\"\n" +
                 "  }}";
 
         TestGithubInteraction gitHubInteraction = objectMapper.readValue(gitHubInteractionAsString, TestGithubInteraction.class);
@@ -109,7 +109,7 @@ public class GitHubInteractionTest {
 
         PullRequestGitHubInteraction prAction=(PullRequestGitHubInteraction)gitHubInteraction.interaction;
         assertThat(prAction.getBranchNameToCreate()).isEqualTo("someName");
-        assertThat(prAction.getPullRequestName()).isEqualTo("the PR name");
+        assertThat(prAction.getPullRequestTitle()).isEqualTo("the PR title");
     }
 
 
