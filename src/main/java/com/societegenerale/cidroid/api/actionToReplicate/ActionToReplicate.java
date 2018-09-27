@@ -65,6 +65,7 @@ public interface ActionToReplicate {
      *
      * @return
      */
+    @JsonIgnore
     default String getDescriptionForUI() {
         return "";
     }

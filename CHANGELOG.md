@@ -5,6 +5,7 @@
 ### Added
 
 ### Changed
+- adding @JsonIgnore on getDescriptionForUI so that the field isn't exposed when part of Swagger doc
 
 ### Deprecated
 
