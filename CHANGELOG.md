@@ -6,6 +6,7 @@
 
 ### Changed
 - adding @JsonIgnore on getDescriptionForUI so that the field isn't exposed when part of Swagger doc
+- ignoring unknown Json fields on ResourceToUpdate
 
 ### Deprecated
 
