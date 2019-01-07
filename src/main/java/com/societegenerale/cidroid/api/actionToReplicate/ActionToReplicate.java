@@ -15,6 +15,12 @@ import java.util.Map;
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.CLASS;
 
+/**
+ * Implementations of this interface will be used in 2 places :
+ * - in CI-droid-tasks-consumer, {@link #provideContent(String,ResourceToUpdate)} will be called every time a single resource needs to be updated
+ * - in CI-droid, the UI related methods ({@link #getExpectedUIFields()} and {@link #getDescriptionForUI()}) will be called to list the available actions and display them
+ *
+ */
 @JsonTypeInfo(use = CLASS, include = PROPERTY)
 public interface ActionToReplicate {
 
