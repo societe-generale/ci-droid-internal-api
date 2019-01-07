@@ -12,6 +12,9 @@
 
 ### Fixed
 
+## [1.0.6] - 2019-01-07
+- PR #1 : upgrading Jackson to 2.9.8 to fix CVEs
+
 ## [1.0.5] - 2018-11-08
 
 ### Changed
